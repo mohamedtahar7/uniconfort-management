@@ -6,7 +6,7 @@ import { RiProgress3Fill } from "react-icons/ri";
 
 const Sidebar = () => {
   return (
-    <div className="sm:flex hidden h-screen flex-col gap-20 w-64 bg-slate-800 text-white">
+    <div className="md:flex hidden h-screen flex-col gap-20 w-64 bg-slate-800 text-white">
       <div className="p-4 font-bold text-lg">Uniconfort Management</div>
       <ul>
         <li className="flex items-center gap-3 p-4 hover:bg-slate-700 cursor-pointer">

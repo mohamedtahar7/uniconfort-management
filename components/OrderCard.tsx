@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
+import Image from "next/image";
 interface OrderCardProps {
   order: any;
 }
@@ -16,7 +17,9 @@ const OrderCard = ({ order }: OrderCardProps) => {
           </h2>
         </div>
         <div>
-          <img
+          <Image
+            width={480}
+            height={480}
             src="https://images.template.net/wp-content/uploads/2017/05/Money-Order-Receipt.jpg"
             alt="receipt img"
           />

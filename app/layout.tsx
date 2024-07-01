@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex">
+        <div className="relative md:flex">
           <Sidebar />
           <main className="flex-1 p-4 bg-gray-100">{children}</main>
         </div>
