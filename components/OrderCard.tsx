@@ -2,12 +2,34 @@ import React from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { Toaster, toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { updateOrderProgress, updateOrderState } from "@/actions/actions";
 interface OrderCardProps {
   order: any;
 }
 const OrderCard = ({ order }: OrderCardProps) => {
+  const router = useRouter();
+  const updateProgress = () => {
+    if (order.orderProgress === "Menuisier") {
+      updateOrderProgress("Tapicier", order.id);
+      toast.success("Menuisier Finished");
+      router.refresh();
+    }
+    if (order.orderProgress === "Tapicier") {
+      updateOrderProgress("Commercial", order.id);
+      toast.success("Tapicier Finished");
+      router.refresh();
+    }
+    if (order.orderProgress === "Commercial") {
+      updateOrderState(order.id);
+      toast.success("Order is ready to be shipped");
+      router.refresh();
+    }
+  };
   return (
     <Card className="relative bg-zinc-200 rounded-xl w-full">
+      <Toaster />
       <CardContent className="flex md:flex-row flex-col items-start justify-between gap-3 py-2">
         <div className="flex flex-col gap-2">
           <h2>Nom de Client: {order.clientName}</h2>
@@ -30,8 +52,21 @@ const OrderCard = ({ order }: OrderCardProps) => {
         <h4 className="">Progress : {order.orderProgress}</h4>
       </div>
       <div className="absolute bottom-2 right-2 flex items-center gap-1">
-        <Button>Finish</Button>
-        <Button>Next</Button>
+        <Button
+          onClick={() => {
+            updateOrderState(order.id);
+            toast.success("Order is ready to be shipped");
+          }}
+        >
+          Finish
+        </Button>
+        <Button
+          onClick={() => {
+            updateProgress();
+          }}
+        >
+          Next
+        </Button>
       </div>
     </Card>
   );

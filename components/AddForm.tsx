@@ -106,7 +106,7 @@ const AddForm = () => {
           >
             <option>Choose a Level</option>
             <option value="Menuisier">Menuisier</option>
-            <option value="Tapicerie">Tapicerie</option>
+            <option value="Tapicier">Tapicier</option>
             <option value="Commercial">Commercial</option>
           </select>
           <Input

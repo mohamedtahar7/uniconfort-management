@@ -22,3 +22,31 @@ export async function getOrders() {
     console.log(error);
   }
 }
+export async function updateOrderProgress(newVal: string, id: any) {
+  try {
+    const updatedOrder = await db.order.update({
+      where: {
+        id: id,
+      },
+      data: {
+        orderProgress: newVal,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function updateOrderState(id: any) {
+  try {
+    const updatedOrder = await db.order.update({
+      where: {
+        id: id,
+      },
+      data: {
+        orderState: "F",
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
