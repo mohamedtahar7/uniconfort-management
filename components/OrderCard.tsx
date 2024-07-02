@@ -45,35 +45,37 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </div>
       </CardContent>
       {order.orderState === "P" && (
-        <div className="absolute bottom-2 left-2 flex items-center gap-1">
-          <div className="w-4 h-4 bg-green-600 rounded-full" />
-          <h4 className="">Progress : {order.orderProgress}</h4>
-        </div>
-      )}
-      {order.orderState === "P" && (
-        <div className="absolute top-0 rounded-xl text-white right-2 flex items-center gap-1 p-2 bg-red-500">
-          <h4 className="">{order.note}</h4>
-        </div>
-      )}
-      {order.orderState === "P" && (
-        <div className="absolute bottom-2 right-2 flex items-center gap-1">
-          <Button
-            onClick={() => {
-              updateOrderState(order.id);
-              toast.success("Order is ready to be shipped");
-              router.refresh();
-            }}
-          >
-            Finish
-          </Button>
-          <Button
-            onClick={() => {
-              updateProgress();
-              router.refresh();
-            }}
-          >
-            Next
-          </Button>
+        <div className="w-full p-4 absolute flex flex-col gap-2 bottom-2 left-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <div className="w-4 h-4 bg-green-600 rounded-full" />
+              <h4 className="">Progress : {order.orderProgress}</h4>
+            </div>
+            <div className="flex items-center gap-1">
+              <Button
+                onClick={() => {
+                  updateOrderState(order.id);
+                  toast.success("Order is ready to be shipped");
+                  router.refresh();
+                }}
+              >
+                Finish
+              </Button>
+              <Button
+                onClick={() => {
+                  updateProgress();
+                  router.refresh();
+                }}
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+          {order.note && (
+            <div className="w-fit rounded-xl text-white p-2 bg-red-500 ">
+              <h4 className="">{order.note}</h4>
+            </div>
+          )}
         </div>
       )}
     </Card>
