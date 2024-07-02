@@ -11,6 +11,7 @@ const AddForm = () => {
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [clientOrder, setClientOrder] = useState("");
+  const [note, setNote] = useState("");
   const [orderImg, setOrderImg] = useState<File | null>(null);
   const [orderProgress, setOrderProgress] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,7 @@ const AddForm = () => {
     cp: string,
     co: string,
     ci: any,
+    n: string,
     op: string,
     os: string
   ) => {
@@ -47,6 +49,7 @@ const AddForm = () => {
       clientPhone: cp,
       clientOrder: co,
       orderImg: orderImgLink,
+      note: n,
       orderProgress: op,
       orderState: os,
     };
@@ -77,6 +80,7 @@ const AddForm = () => {
               clientPhone,
               clientOrder,
               orderImg,
+              note,
               orderProgress,
               orderState
             );
@@ -112,6 +116,16 @@ const AddForm = () => {
             type="text"
             min={0}
             placeholder="Commande de Client"
+          />
+          <Input
+            value={note}
+            onChange={(e) => {
+              setNote(e.target.value);
+            }}
+            className="border-[#fffafb]"
+            type="text"
+            min={0}
+            placeholder="Remarque"
           />
           <select
             className="rounded-md p-3"

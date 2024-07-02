@@ -9,6 +9,7 @@ export async function addOrder(order: Order) {
       clientPhone: order.clientPhone,
       clientOrder: order.clientOrder,
       orderImg: order.orderImg,
+      note: order.note,
       orderState: order.orderState,
       orderProgress: order.orderProgress,
     },

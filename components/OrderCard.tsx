@@ -51,6 +51,11 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </div>
       )}
       {order.orderState === "P" && (
+        <div className="absolute top-0 rounded-xl text-white right-2 flex items-center gap-1 p-2 bg-red-500">
+          <h4 className="">{order.note}</h4>
+        </div>
+      )}
+      {order.orderState === "P" && (
         <div className="absolute bottom-2 right-2 flex items-center gap-1">
           <Button
             onClick={() => {
