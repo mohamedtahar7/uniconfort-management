@@ -14,17 +14,14 @@ const OrderCard = ({ order }: OrderCardProps) => {
     if (order.orderProgress === "Menuisier") {
       updateOrderProgress("Tapicier", order.id);
       toast.success("Menuisier Finished");
-      router.refresh();
     }
     if (order.orderProgress === "Tapicier") {
       updateOrderProgress("Commercial", order.id);
       toast.success("Tapicier Finished");
-      router.refresh();
     }
     if (order.orderProgress === "Commercial") {
       updateOrderState(order.id);
       toast.success("Order is ready to be shipped");
-      router.refresh();
     }
   };
   return (
@@ -38,36 +35,42 @@ const OrderCard = ({ order }: OrderCardProps) => {
             Commande de Client: <br /> {order.clientOrder}
           </h2>
         </div>
-        <div>
+        <div className="w-[360px] h-[360px] overflow-hidden">
           <Image
             width={480}
             height={480}
-            src="https://images.template.net/wp-content/uploads/2017/05/Money-Order-Receipt.jpg"
+            src={order.orderImg}
             alt="receipt img"
           />
         </div>
       </CardContent>
-      <div className="absolute top-2 right-2 flex items-center gap-1">
-        <div className="w-4 h-4 bg-green-600 rounded-full" />
-        <h4 className="">Progress : {order.orderProgress}</h4>
-      </div>
-      <div className="absolute bottom-2 right-2 flex items-center gap-1">
-        <Button
-          onClick={() => {
-            updateOrderState(order.id);
-            toast.success("Order is ready to be shipped");
-          }}
-        >
-          Finish
-        </Button>
-        <Button
-          onClick={() => {
-            updateProgress();
-          }}
-        >
-          Next
-        </Button>
-      </div>
+      {order.orderState === "P" && (
+        <div className="absolute top-2 right-2 flex items-center gap-1">
+          <div className="w-4 h-4 bg-green-600 rounded-full" />
+          <h4 className="">Progress : {order.orderProgress}</h4>
+        </div>
+      )}
+      {order.orderState === "P" && (
+        <div className="absolute bottom-2 right-2 flex items-center gap-1">
+          <Button
+            onClick={() => {
+              updateOrderState(order.id);
+              toast.success("Order is ready to be shipped");
+              router.refresh();
+            }}
+          >
+            Finish
+          </Button>
+          <Button
+            onClick={() => {
+              updateProgress();
+              router.refresh();
+            }}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </Card>
   );
 };

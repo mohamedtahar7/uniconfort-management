@@ -6,31 +6,47 @@ import { Button } from "./ui/button";
 import Spinner from "./ui/Spinner";
 import { addOrder } from "@/actions/actions";
 import { Toaster, toast } from "sonner";
+import axios from "axios";
 const AddForm = () => {
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [clientOrder, setClientOrder] = useState("");
-  const [orderImg, setOrderImg] = useState("");
+  const [orderImg, setOrderImg] = useState<File | null>(null);
   const [orderProgress, setOrderProgress] = useState("");
   const [loading, setLoading] = useState(false);
   const id = clientName;
   const orderState = "P";
+  const uploadImg = async (img: any) => {
+    const data = new FormData();
+    data.append("file", img);
+    data.append("upload_preset", "uniconfort_preset");
+    try {
+      let api = `https://api.cloudinary.com/v1_1/dlzmmzpkw/image/upload`;
+      const res = await axios.post(api, data);
+      const { secure_url } = res.data;
+      console.log(secure_url);
+      return secure_url;
+    } catch (error) {
+      alert(error);
+    }
+  };
   const handleSubmit = async (
     id: string,
     cn: string,
     cp: string,
     co: string,
-    ci: string,
+    ci: any,
     op: string,
     os: string
   ) => {
     setLoading(true);
+    const orderImgLink = await uploadImg(ci);
     const order = {
       id,
       clientName: cn,
       clientPhone: cp,
       clientOrder: co,
-      orderImg: ci,
+      orderImg: orderImgLink,
       orderProgress: op,
       orderState: os,
     };
@@ -111,10 +127,13 @@ const AddForm = () => {
           </select>
           <Input
             className="cursor-pointer"
-            type="text"
-            placeholder="Image 1"
-            value={orderImg}
-            onChange={(e) => setOrderImg(e.target.value)}
+            type="file"
+            placeholder="Image de Commande"
+            onChange={(e) => {
+              if (e.target.files && e.target.files[0]) {
+                setOrderImg(e.target.files[0]);
+              }
+            }}
           />
           <Button
             disabled={loading}
