@@ -24,7 +24,7 @@ const Page = () => {
         Commandes Pretes
       </h2>
       <div className="flex flex-col gap-5">
-        {loading && orders.length === 0 ? (
+        {loading ? (
           <Spinner d="10" />
         ) : (
           orders
