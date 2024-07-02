@@ -9,6 +9,7 @@ import Link from "next/link";
 
 const Page = () => {
   const [activeNav, setActiveNav] = useState(false);
+  
   return (
     <main className="relative">
       <div className="flex items-center justify-center">

@@ -25,7 +25,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
     }
   };
   return (
-    <Card className="relative bg-zinc-200 rounded-xl w-full">
+    <Card className="overflow-hidden relative bg-zinc-200 rounded-xl w-full">
       <Toaster />
       <CardContent className="flex md:flex-row flex-col items-start justify-between gap-3 py-2">
         <div className="flex flex-col gap-2">
