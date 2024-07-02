@@ -25,7 +25,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
     }
   };
   return (
-    <Card className="overflow-hidden relative bg-zinc-200 rounded-xl w-full">
+    <Card className="overflow-x-hidden relative bg-zinc-200 rounded-xl w-full">
       <Toaster />
       <CardContent className="flex md:flex-row flex-col items-start justify-between gap-3 py-2">
         <div className="flex flex-col gap-2">
@@ -35,7 +35,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
             Commande de Client: <br /> {order.clientOrder}
           </h2>
         </div>
-        <div className="w-[360px] h-[360px] overflow-hidden">
+        <div className="flex items-center w-[360px] h-[360px] overflow-hidden">
           <Image
             width={480}
             height={480}
@@ -45,7 +45,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </div>
       </CardContent>
       {order.orderState === "P" && (
-        <div className="absolute top-2 right-2 flex items-center gap-1">
+        <div className="absolute bottom-2 left-2 flex items-center gap-1">
           <div className="w-4 h-4 bg-green-600 rounded-full" />
           <h4 className="">Progress : {order.orderProgress}</h4>
         </div>
