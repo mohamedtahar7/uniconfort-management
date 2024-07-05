@@ -23,6 +23,18 @@ export async function getOrders() {
     console.log(error);
   }
 }
+export async function getOrderById(id: any) {
+  try {
+    const order = await db.order.findUnique({
+      where: {
+        id:id
+      },
+    });
+    return order;
+  } catch (error) {
+    console.log(error);
+  }
+}
 export async function updateOrderProgress(newVal: string, id: any) {
   try {
     const updatedOrder = await db.order.update({
@@ -45,6 +57,17 @@ export async function updateOrderState(id: any) {
       },
       data: {
         orderState: "F",
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function deleteOrder(id: any) {
+  try {
+    const deletedProduct = await db.order.delete({
+      where: {
+        id: id,
       },
     });
   } catch (error) {

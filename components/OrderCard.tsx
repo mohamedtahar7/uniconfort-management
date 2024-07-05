@@ -4,7 +4,14 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { updateOrderProgress, updateOrderState } from "@/actions/actions";
+import {
+  deleteOrder,
+  updateOrderProgress,
+  updateOrderState,
+} from "@/actions/actions";
+import { CiEdit } from "react-icons/ci";
+import { AiFillDelete } from "react-icons/ai";
+import Link from "next/link";
 interface OrderCardProps {
   order: any;
 }
@@ -35,15 +42,41 @@ const OrderCard = ({ order }: OrderCardProps) => {
             Commande de Client: <br /> {order.clientOrder}
           </h2>
         </div>
-        <div className="flex items-center w-[360px] h-[360px] overflow-hidden">
-          <Image
-            width={480}
-            height={480}
-            src={order.orderImg}
-            alt="receipt img"
-          />
-        </div>
+        {order.orderImg && (
+          <div className="flex items-center w-[360px] h-[360px] overflow-hidden">
+            <Image
+              width={480}
+              height={480}
+              src={order.orderImg}
+              alt="receipt img"
+            />
+          </div>
+        )}
       </CardContent>
+      <div className="absolute top-2 right-2 flex items-center gap-2">
+        <Link href={``}>
+          <Button
+            onClick={() => {
+              // toast.success("Ajouté au Panier");
+            }}
+            variant={"outline"}
+            className="flex items-center gap-2 w-full transition rounded-xl text-lg text-slate-900 "
+          >
+            <CiEdit size={20} />
+          </Button>
+        </Link>
+        <Button
+          variant={"destructive"}
+          className="flex items-center transition w-full rounded-xl text-lg text-[#fffafb]"
+          onClick={() => {
+            deleteOrder(order.id);
+            toast.success("Item Removed!");
+            router.refresh();
+          }}
+        >
+          <AiFillDelete size={20} />
+        </Button>
+      </div>
       {order.orderState === "P" && (
         <div className="w-full p-4 absolute flex flex-col gap-2 bottom-2 left-2">
           <div className="flex items-center justify-between">

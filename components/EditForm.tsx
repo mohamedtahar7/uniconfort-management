@@ -7,13 +7,16 @@ import Spinner from "./ui/Spinner";
 import { addOrder } from "@/actions/actions";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
-const AddForm = () => {
-  const [clientName, setClientName] = useState("");
-  const [clientPhone, setClientPhone] = useState("");
-  const [clientOrder, setClientOrder] = useState("");
-  const [note, setNote] = useState("");
+interface EditFormProps {
+  order: any;
+}
+const EditForm = ({ order }: EditFormProps) => {
+  const [clientName, setClientName] = useState(order.clientName);
+  const [clientPhone, setClientPhone] = useState(order.clientPhone);
+  const [clientOrder, setClientOrder] = useState(order.clientOrder);
+  const [note, setNote] = useState(order.note);
   const [orderImg, setOrderImg] = useState<File | null>(null);
-  const [orderProgress, setOrderProgress] = useState("");
+  const [orderProgress, setOrderProgress] = useState(order.orderProgress);
   const [loading, setLoading] = useState(false);
   const id = clientName;
   const orderState = "P";
@@ -90,6 +93,7 @@ const AddForm = () => {
           }}
           className="flex flex-col gap-3"
         >
+          <label className="text-white">Nom de Client</label>
           <Input
             value={clientName}
             onChange={(e) => {
@@ -100,6 +104,7 @@ const AddForm = () => {
             placeholder="Nom de Client"
             required
           />
+          <label className="text-white">Numero de Client</label>
           <Input
             value={clientPhone}
             onChange={(e) => {
@@ -109,6 +114,7 @@ const AddForm = () => {
             type="text"
             placeholder="Numero de Client"
           />
+          <label className="text-white">Commande de Client</label>
           <Input
             value={clientOrder}
             onChange={(e) => {
@@ -120,6 +126,7 @@ const AddForm = () => {
             min={0}
             placeholder="Commande de Client"
           />
+          <label className="text-white">Remarque</label>
           <Input
             value={note}
             onChange={(e) => {
@@ -142,6 +149,7 @@ const AddForm = () => {
             <option value="Tapicier">Tapicier</option>
             <option value="Commercial">Commercial</option>
           </select>
+          <label className="text-white">Image</label>
           <Input
             className="cursor-pointer"
             type="file"
@@ -166,4 +174,4 @@ const AddForm = () => {
   );
 };
 
-export default AddForm;
+export default EditForm;
