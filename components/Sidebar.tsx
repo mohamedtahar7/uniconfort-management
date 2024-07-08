@@ -17,7 +17,7 @@ const Sidebar = () => {
           All Orders
         </Link>
         <Link
-          href="in-progress"
+          href="/in-progress"
           className="flex items-center gap-3 p-4 hover:bg-slate-700 cursor-pointer"
         >
           <RiProgress3Fill size={25} className="text-white" />

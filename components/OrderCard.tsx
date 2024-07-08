@@ -104,7 +104,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </div>
       </CardContent>
       <div className="absolute top-2 right-2 flex items-center gap-2">
-        <Link href={``}>
+        <Link href={`/order/${order.id}`}>
           <Button
             onClick={() => {
               // toast.success("Ajouté au Panier");
