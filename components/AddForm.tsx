@@ -12,6 +12,7 @@ const AddForm = () => {
   const [clientPhone, setClientPhone] = useState("");
   const [clientOrder, setClientOrder] = useState("");
   const [note, setNote] = useState("");
+  const [noteArray, setNoteArray] = useState<string[]>([]);
   const [orderImg, setOrderImg] = useState<File | null>(null);
   const [orderProgress, setOrderProgress] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,13 +47,14 @@ const AddForm = () => {
     if (ci !== null) {
       orderImgLink = await uploadImg(ci);
     }
+    const noteTable = [...noteArray, n];
     const order = {
       id,
       clientName: cn,
       clientPhone: cp,
       clientOrder: co,
       orderImg: orderImgLink,
-      note: n,
+      note: noteTable,
       orderProgress: op,
       orderState: os,
     };

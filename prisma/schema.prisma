@@ -19,7 +19,7 @@ model Order {
   clientPhone String
   clientOrder String
   orderImg String?
-  note String?
+  note String[]
   orderProgress String
   orderState String
 }

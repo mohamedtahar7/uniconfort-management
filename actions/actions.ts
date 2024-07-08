@@ -27,7 +27,7 @@ export async function getOrderById(id: any) {
   try {
     const order = await db.order.findUnique({
       where: {
-        id:id
+        id: id,
       },
     });
     return order;
@@ -43,6 +43,20 @@ export async function updateOrderProgress(newVal: string, id: any) {
       },
       data: {
         orderProgress: newVal,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function updateOrderNotes(newVal: any, id: any) {
+  try {
+    const updatedOrder = await db.order.update({
+      where: {
+        id: id,
+      },
+      data: {
+        note: newVal,
       },
     });
   } catch (error) {

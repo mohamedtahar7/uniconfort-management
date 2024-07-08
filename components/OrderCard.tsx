@@ -18,16 +18,16 @@ interface OrderCardProps {
 const OrderCard = ({ order }: OrderCardProps) => {
   const router = useRouter();
   const updateProgress = () => {
-    if (order.orderProgress === "Menuisier") {
-      updateOrderProgress("Tapicier", order.id);
+    if (order?.orderProgress === "Menuisier") {
+      updateOrderProgress("Tapicier", order?.id);
       toast.success("Menuisier Finished");
     }
-    if (order.orderProgress === "Tapicier") {
-      updateOrderProgress("Commercial", order.id);
+    if (order?.orderProgress === "Tapicier") {
+      updateOrderProgress("Commercial", order?.id);
       toast.success("Tapicier Finished");
     }
-    if (order.orderProgress === "Commercial") {
-      updateOrderState(order.id);
+    if (order?.orderProgress === "Commercial") {
+      updateOrderState(order?.id);
       toast.success("Order is ready to be shipped");
     }
   };
@@ -36,22 +36,72 @@ const OrderCard = ({ order }: OrderCardProps) => {
       <Toaster />
       <CardContent className="flex md:flex-row flex-col items-start justify-between gap-3 py-2">
         <div className="flex flex-col gap-2">
-          <h2>Nom de Client: {order.clientName}</h2>
-          <h2>Numero de Client: {order.clientPhone}</h2>
+          <h2>Nom de Client: {order?.clientName}</h2>
+          <h2>Numero de Client: {order?.clientPhone}</h2>
           <h2 className="">
-            Commande de Client: <br /> {order.clientOrder}
+            Commande de Client: <br /> {order?.clientOrder}
           </h2>
+          {order?.orderState === "P" && (
+            <div className="flex items-center gap-1">
+              <h4 className="">Progress : {order?.orderProgress}</h4>
+            </div>
+          )}
+          {order?.note && (
+            <div className="flex flex-col gap-2">
+              {order?.orderState === "P" && (
+                <div className="flex flex-col gap-3 items-start justify-between">
+                  <h1>Remarques:</h1>
+                  <div className="flex flex-col gap-3">
+                    {order?.note.map((n: string, id: any) => {
+                      if (n !== "") {
+                        return (
+                          <h4
+                            key={id}
+                            className={`rounded-lg text-white p-2 bg-red-500 w-fit`}
+                          >
+                            {order?.note[id]}
+                          </h4>
+                        );
+                      }
+                    })}
+                  </div>
+                  {/* <Link href="/">
+                  <Button className="flex items-center transition w-full rounded-xl text-lg text-[#fffafb]">
+                    Ajouter un remarque
+                  </Button>
+                </Link> */}
+                </div>
+              )}
+            </div>
+          )}
+          {/* <div className="flex items-center gap-1">
+              <Button
+                onClick={() => {
+                  updateOrderState(order?.id);
+                  toast.success("Order is ready to be shipped");
+                  router.refresh();
+                }}
+              >
+                Finish
+              </Button>
+              <Button
+                onClick={() => {
+                  updateProgress();
+                  router.refresh();
+                }}
+              >
+                Next
+              </Button>
+            </div> */}
         </div>
-        {order.orderImg && (
-          <div className="flex items-center w-[360px] h-[360px] overflow-hidden">
-            <Image
-              width={480}
-              height={480}
-              src={order.orderImg}
-              alt="receipt img"
-            />
-          </div>
-        )}
+        <div className="flex mb-6 items-center w-[360px] h-[360px] overflow-hidden">
+          <Image
+            width={480}
+            height={480}
+            src={order?.orderImg}
+            alt="receipt img"
+          />
+        </div>
       </CardContent>
       <div className="absolute top-2 right-2 flex items-center gap-2">
         <Link href={``}>
@@ -69,7 +119,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
           variant={"destructive"}
           className="flex items-center transition w-full rounded-xl text-lg text-[#fffafb]"
           onClick={() => {
-            deleteOrder(order.id);
+            deleteOrder(order?.id);
             toast.success("Item Removed!");
             router.refresh();
           }}
@@ -77,38 +127,30 @@ const OrderCard = ({ order }: OrderCardProps) => {
           <AiFillDelete size={20} />
         </Button>
       </div>
-      {order.orderState === "P" && (
-        <div className="w-full p-4 absolute flex flex-col gap-2 bottom-2 left-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <div className="w-4 h-4 bg-green-600 rounded-full" />
-              <h4 className="">Progress : {order.orderProgress}</h4>
-            </div>
-            <div className="flex items-center gap-1">
-              <Button
-                onClick={() => {
-                  updateOrderState(order.id);
-                  toast.success("Order is ready to be shipped");
-                  router.refresh();
-                }}
-              >
-                Finish
-              </Button>
-              <Button
-                onClick={() => {
-                  updateProgress();
-                  router.refresh();
-                }}
-              >
-                Next
-              </Button>
-            </div>
+      {order?.orderState === "P" && (
+        <div className="w-full p-4 absolute flex sm:flex-row flex-col gap-2 bottom-2 left-2">
+          <div className="flex items-center gap-1">
+            <Button
+              onClick={() => {
+                updateOrderState(order?.id);
+                toast.success("Order is ready to be shipped");
+                router.refresh();
+              }}
+            >
+              Finish
+            </Button>
+            <Button
+              onClick={() => {
+                updateProgress();
+                router.refresh();
+              }}
+            >
+              Next
+            </Button>
           </div>
-          {order.note && (
-            <div className="w-fit rounded-xl text-white p-2 bg-red-500 ">
-              <h4 className="">{order.note}</h4>
-            </div>
-          )}
+          <Link href={`/add-note/${order?.id}`}>
+            <Button>Ajouter une remarque</Button>
+          </Link>
         </div>
       )}
     </Card>
