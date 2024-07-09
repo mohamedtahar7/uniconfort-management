@@ -4,22 +4,27 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Spinner from "./ui/Spinner";
-import { addOrder } from "@/actions/actions";
+import { addOrder, updateOrder } from "@/actions/actions";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-const AddForm = () => {
-  const router = useRouter();
-  const [clientName, setClientName] = useState("");
-  const [clientPhone, setClientPhone] = useState("");
-  const [clientOrder, setClientOrder] = useState("");
-  const [note, setNote] = useState("");
-  const [noteArray, setNoteArray] = useState<string[]>([]);
-  const [orderImg, setOrderImg] = useState<File | null>(null);
-  const [orderProgress, setOrderProgress] = useState("");
+import { Order } from "@prisma/client";
+interface EditFormProps {
+  order: any;
+}
+const EditForm = ({ order }: EditFormProps) => {
+  const [clientName, setClientName] = useState(order ? order.clientName : "");
+  const [clientPhone, setClientPhone] = useState(
+    order ? order.clientPhone : ""
+  );
+  const [clientOrder, setClientOrder] = useState(
+    order ? order.clientOrder : ""
+  );
+  //   const [note, setNote] = useState("");
+  //   const [noteArray, setNoteArray] = useState<string[]>([]);
+  //   const [orderImg, setOrderImg] = useState<File | null>(null);
+  //   const [orderProgress, setOrderProgress] = useState("");
   const [loading, setLoading] = useState(false);
   const id = clientName;
-  const orderState = "P";
   const uploadImg = async (img: any) => {
     const data = new FormData();
     data.append("file", img);
@@ -38,33 +43,20 @@ const AddForm = () => {
     id: string,
     cn: string,
     cp: string,
-    co: string,
-    ci: any,
-    n: string,
-    op: string,
-    os: string
+    co: string
   ) => {
     setLoading(true);
-    let orderImgLink = "";
-    if (ci !== null) {
-      orderImgLink = await uploadImg(ci);
-    }
-    const noteTable = [...noteArray, n];
-    const order = {
+    const ord = {
       id,
       clientName: cn,
       clientPhone: cp,
       clientOrder: co,
-      orderImg: orderImgLink,
-      note: noteTable,
-      orderProgress: op,
-      orderState: os,
     };
     try {
-      const result = await addOrder(order);
+      const result = await updateOrder(ord, order.id);
       setLoading(false);
       toast.success(
-        `The Order of Mr ${order.clientName} has been added successfully!`
+        `The Order of Mr ${ord.clientName} has been edited successfully!`
       );
     } catch (error) {
       toast.error("Something went wrong!");
@@ -76,20 +68,16 @@ const AddForm = () => {
       <Toaster richColors />
       <div className="flex flex-col gap-4 py-2 px-5 bg-slate-700 rounded-xl">
         <h2 className="text-[#fffafb] text-center text-xl font-semibold">
-          Ajouter une Commande
+          Modifier une Commande
         </h2>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(
               id,
-              clientName,
-              clientPhone,
-              clientOrder,
-              orderImg,
-              note,
-              orderProgress,
-              orderState
+              clientName === "" ? order?.clientName : clientName,
+              clientPhone === "" ? order?.clientPhone : clientPhone,
+              clientOrder === "" ? order?.clientOrder : clientOrder
             );
           }}
           className="flex flex-col gap-3"
@@ -102,7 +90,6 @@ const AddForm = () => {
             className="border-[#fffafb]"
             type="text"
             placeholder="Nom de Client"
-            required
           />
           <Input
             value={clientPhone}
@@ -118,13 +105,12 @@ const AddForm = () => {
             onChange={(e) => {
               setClientOrder(e.target.value);
             }}
-            required
             className="border-[#fffafb]"
             type="text"
             min={0}
             placeholder="Commande de Client"
           />
-          <Input
+          {/* <Input
             value={note}
             onChange={(e) => {
               setNote(e.target.value);
@@ -133,8 +119,8 @@ const AddForm = () => {
             type="text"
             min={0}
             placeholder="Remarque"
-          />
-          <select
+          /> */}
+          {/* <select
             className="rounded-md p-3"
             onChange={(e) => {
               setOrderProgress(e.target.value);
@@ -145,8 +131,8 @@ const AddForm = () => {
             <option value="Menuisier">Menuisier</option>
             <option value="Tapicier">Tapicier</option>
             <option value="Commercial">Commercial</option>
-          </select>
-          <Input
+          </select> */}
+          {/* <Input
             className="cursor-pointer"
             type="file"
             placeholder="Image de Commande"
@@ -155,14 +141,14 @@ const AddForm = () => {
                 setOrderImg(e.target.files[0]);
               }
             }}
-          />
+          /> */}
           <Button
             disabled={loading}
             type="submit"
             className="p-2"
             variant={"outline"}
           >
-            {loading ? <Spinner d="20" /> : "Ajouter la Commande"}
+            {loading ? <Spinner d="20" /> : "Sauvegarder les Modifications"}
           </Button>
         </form>
       </div>
@@ -170,4 +156,4 @@ const AddForm = () => {
   );
 };
 
-export default AddForm;
+export default EditForm;

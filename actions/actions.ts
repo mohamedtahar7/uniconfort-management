@@ -35,6 +35,22 @@ export async function getOrderById(id: any) {
     console.log(error);
   }
 }
+export async function updateOrder(newVal: any, id: any) {
+  try {
+    const updatedOrder = await db.order.update({
+      where: {
+        id: id,
+      },
+      data: {
+        clientName: newVal.clientName,
+        clientPhone: newVal.clientPhone,
+        clientOrder: newVal.clientOrder,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 export async function updateOrderProgress(newVal: string, id: any) {
   try {
     const updatedOrder = await db.order.update({
