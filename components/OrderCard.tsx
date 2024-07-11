@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import {
+  deleteNote,
   deleteOrder,
   updateOrderProgress,
   updateOrderState,
@@ -52,14 +53,24 @@ const OrderCard = ({ order }: OrderCardProps) => {
                 <div className="flex flex-col gap-3 items-start justify-between">
                   <h1>Remarques:</h1>
                   <div className="flex flex-col gap-3">
-                    {order?.note.map((n: string, id: any) => {
+                    {order?.note.map((n: string, index: any) => {
                       if (n !== "") {
                         return (
                           <h4
-                            key={id}
-                            className={`rounded-lg text-white p-2 bg-red-500 w-fit`}
+                            key={index}
+                            className={`flex items-center justify-between w-full rounded-lg text-white p-2 mr-2 bg-red-500`}
                           >
-                            {order?.note[id]}
+                            {order?.note[index]}
+                            <Button
+                              className=" text-red-500"
+                              onClick={() => {
+                                deleteNote(order.id, order?.note[index]);
+                                toast.success("remarque supprimée");
+                              }}
+                              variant={"secondary"}
+                            >
+                              <AiFillDelete size={20} />
+                            </Button>
                           </h4>
                         );
                       }

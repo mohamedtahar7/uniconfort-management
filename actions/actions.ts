@@ -104,3 +104,23 @@ export async function deleteOrder(id: any) {
     console.log(error);
   }
 }
+export async function deleteNote(id: any, note: any) {
+  try {
+    const order = await db.order.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    if (order) {
+      const noteArray = order.note.filter((n) => n !== note);
+      const updatedOrder = await db.order.update({
+        where: {
+          id: id,
+        },
+        data: {
+          note: noteArray,
+        },
+      });
+    }
+  } catch (error) {}
+}
