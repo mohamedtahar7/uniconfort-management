@@ -32,6 +32,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       toast.success("Order is ready to be shipped");
     }
   };
+  const password = "mehdi";
   return (
     <Card className="overflow-x-hidden relative bg-zinc-200 rounded-xl w-full">
       <Toaster />
@@ -130,8 +131,13 @@ const OrderCard = ({ order }: OrderCardProps) => {
           variant={"destructive"}
           className="flex items-center transition w-full rounded-xl text-lg text-[#fffafb]"
           onClick={() => {
-            deleteOrder(order?.id);
-            toast.success("Item Removed!");
+            const pass = prompt("Enter the password");
+            if (pass === password) {
+              deleteOrder(order?.id);
+              toast.success("Item Removed!");
+            } else {
+              toast.error("Wrong password");
+            }
             router.refresh();
           }}
         >
