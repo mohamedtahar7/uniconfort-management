@@ -8,6 +8,7 @@ import { addOrder } from "@/actions/actions";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { password } from "@/lib/password";
 const AddForm = () => {
   const router = useRouter();
   const [clientName, setClientName] = useState("");
@@ -81,16 +82,21 @@ const AddForm = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleSubmit(
-              id,
-              clientName,
-              clientPhone,
-              clientOrder,
-              orderImg,
-              note,
-              orderProgress,
-              orderState
-            );
+            const pass = prompt("Enter the password");
+            if (pass === password) {
+              handleSubmit(
+                id,
+                clientName,
+                clientPhone,
+                clientOrder,
+                orderImg,
+                note,
+                orderProgress,
+                orderState
+              );
+            } else {
+              toast.error("Wrong password");
+            }
           }}
           className="flex flex-col gap-3"
         >

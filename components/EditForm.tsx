@@ -8,6 +8,7 @@ import { addOrder, updateOrder } from "@/actions/actions";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
 import { Order } from "@prisma/client";
+import { password } from "@/lib/password";
 interface EditFormProps {
   order: any;
 }
@@ -73,12 +74,17 @@ const EditForm = ({ order }: EditFormProps) => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleSubmit(
-              id,
-              clientName === "" ? order?.clientName : clientName,
-              clientPhone === "" ? order?.clientPhone : clientPhone,
-              clientOrder === "" ? order?.clientOrder : clientOrder
-            );
+            const pass = prompt("Enter the password");
+            if (pass === password) {
+              handleSubmit(
+                id,
+                clientName === "" ? order?.clientName : clientName,
+                clientPhone === "" ? order?.clientPhone : clientPhone,
+                clientOrder === "" ? order?.clientOrder : clientOrder
+              );
+            } else {
+              toast.error("Wrong password");
+            }
           }}
           className="flex flex-col gap-3"
         >

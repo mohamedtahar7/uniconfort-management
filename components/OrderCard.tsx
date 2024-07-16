@@ -13,6 +13,7 @@ import {
 import { CiEdit } from "react-icons/ci";
 import { AiFillDelete } from "react-icons/ai";
 import Link from "next/link";
+import { password } from "@/lib/password";
 interface OrderCardProps {
   order: any;
 }
@@ -32,7 +33,6 @@ const OrderCard = ({ order }: OrderCardProps) => {
       toast.success("Order is ready to be shipped");
     }
   };
-  const password = "mehdi";
   return (
     <Card className="overflow-x-hidden relative bg-zinc-200 rounded-xl w-full">
       <Toaster />
@@ -134,7 +134,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
             const pass = prompt("Enter the password");
             if (pass === password) {
               deleteOrder(order?.id);
-              toast.success("Item Removed!");
+              toast.success("Order Removed!");
             } else {
               toast.error("Wrong password");
             }
