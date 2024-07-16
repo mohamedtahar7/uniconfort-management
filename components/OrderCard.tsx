@@ -145,12 +145,17 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </Button>
       </div>
       {order?.orderState === "P" && (
-        <div className="w-full p-4 absolute flex sm:flex-row flex-col gap-2 bottom-2 sm:left-[68%] left-2">
+        <div className="w-full p-4 absolute flex sm:flex-row flex-col gap-2 bottom-2 sm:left-0  left-2">
           <div className="flex items-center gap-1">
             <Button
               onClick={() => {
-                updateOrderState(order?.id);
-                toast.success("Order is ready to be shipped");
+                const pass = prompt("Enter the password");
+                if (pass === password) {
+                  updateOrderState(order?.id);
+                  toast.success("Order is ready to be shipped");
+                } else {
+                  toast.error("Wrong password");
+                }
                 router.refresh();
               }}
             >
@@ -158,8 +163,13 @@ const OrderCard = ({ order }: OrderCardProps) => {
             </Button>
             <Button
               onClick={() => {
-                updateProgress();
-                router.refresh();
+                const pass = prompt("Enter the password");
+                if (pass === password) {
+                  updateProgress();
+                  router.refresh();
+                } else {
+                  toast.error("Wrong password");
+                }
               }}
             >
               Next
