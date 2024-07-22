@@ -14,21 +14,21 @@ const Sidebar = () => {
           className="flex items-center gap-3 p-4 hover:bg-slate-700 cursor-pointer"
         >
           <FaClipboardList size={25} className="text-white" />
-          All Orders
+          Commande Terminées
         </Link>
         <Link
           href="/in-progress"
           className="flex items-center gap-3 p-4 hover:bg-slate-700 cursor-pointer"
         >
           <RiProgress3Fill size={25} className="text-white" />
-          Orders in progress
+          Commande en cours
         </Link>
         <Link
           href={"/add"}
           className="flex items-center gap-3 p-4 hover:bg-slate-700 cursor-pointer"
         >
           <MdAddCircle size={25} className="text-white" />
-          Add Order
+          Ajouter une Commande
         </Link>
       </ul>
     </div>

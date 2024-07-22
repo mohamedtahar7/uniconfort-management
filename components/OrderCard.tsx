@@ -159,7 +159,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
                 router.refresh();
               }}
             >
-              Finish
+              Terminé
             </Button>
             <Button
               onClick={() => {
@@ -172,7 +172,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
                 }
               }}
             >
-              Next
+              Suivant
             </Button>
           </div>
           <Link href={`/add-note/${order?.id}`}>
