@@ -35,6 +35,20 @@ export async function getOrderById(id: any) {
     console.log(error);
   }
 }
+export async function getOrdersByName(query: any) {
+  try {
+    const order = await db.order.findMany({
+      where: {
+        clientName: {
+          contains: query,
+        },
+      },
+    });
+    return order;
+  } catch (error) {
+    console.log(error);
+  }
+}
 export async function updateOrder(newVal: any, id: any) {
   try {
     const updatedOrder = await db.order.update({

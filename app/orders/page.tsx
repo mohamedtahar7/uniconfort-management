@@ -1,12 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { getOrders } from "@/actions/actions";
+import React, { useContext, useEffect, useState } from "react";
+import { getOrders, getOrdersByName } from "@/actions/actions";
 import OrderCard from "@/components/OrderCard";
 import Spinner from "@/components/ui/Spinner";
 import { Button } from "@/components/ui/button";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import MobileNav from "@/components/MobileNav";
+import { QueryContext } from "@/contexts/QueryContext";
+import SearchBar from "@/components/SearchBar";
 const Page = () => {
+  const { query } = useContext(QueryContext);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeNav, setActiveNav] = useState(false);
@@ -14,15 +17,25 @@ const Page = () => {
     const ords: any = await getOrders();
     setOrders(ords);
   };
+  const fetchOrdersByName = async (query: any) => {
+    const ords: any = await getOrdersByName(query);
+    setOrders(ords);
+  };
   useEffect(() => {
-    fetchOrders();
-    setLoading(false);
-  }, []);
+    if (query === "") {
+      fetchOrders();
+      setLoading(false);
+    } else {
+      fetchOrdersByName(query);
+      setLoading(false);
+    }
+  }, [orders]);
   return (
     <main>
       <h2 className="text-center mb-5 text-3xl text-slate-800 font-semibold">
         Commandes Pretes
       </h2>
+      <SearchBar />
       <div className="flex flex-col gap-5">
         {loading ? (
           <Spinner d="10" />

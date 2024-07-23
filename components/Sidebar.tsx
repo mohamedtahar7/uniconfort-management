@@ -14,7 +14,7 @@ const Sidebar = () => {
           className="flex items-center gap-3 p-4 hover:bg-slate-700 cursor-pointer"
         >
           <FaClipboardList size={25} className="text-white" />
-          Commande Terminées
+          Commandes Prêtes
         </Link>
         <Link
           href="/in-progress"
