@@ -22,4 +22,6 @@ model Order {
   note String[]
   orderProgress String
   orderState String
+  addedDate DateTime
+  finishedDate DateTime
 }

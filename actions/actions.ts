@@ -12,6 +12,8 @@ export async function addOrder(order: Order) {
       note: order.note,
       orderState: order.orderState,
       orderProgress: order.orderProgress,
+      addedDate: order.addedDate,
+      finishedDate: order.finishedDate,
     },
   });
 }
@@ -101,6 +103,7 @@ export async function updateOrderState(id: any) {
       },
       data: {
         orderState: "F",
+        finishedDate: new Date(),
       },
     });
   } catch (error) {

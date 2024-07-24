@@ -59,6 +59,7 @@ const AddForm = () => {
     let finalImages = imagesLinks.filter((img) => img !== undefined);
     console.log(imagesLinks);
     const noteTable = [...noteArray, n];
+    const today = new Date();
     const order = {
       id,
       clientName: cn,
@@ -68,6 +69,8 @@ const AddForm = () => {
       note: noteTable,
       orderProgress: op,
       orderState: os,
+      addedDate: today,
+      finishedDate: today,
     };
     try {
       const result = await addOrder(order);

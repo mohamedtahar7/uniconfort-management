@@ -41,6 +41,25 @@ const OrderCard = ({ order }: OrderCardProps) => {
         <div className="flex flex-col gap-2">
           <h2>Nom de Client: {order?.clientName}</h2>
           <h2>Numero de Client: {order?.clientPhone}</h2>
+          {order?.orderState === "P" ? (
+            <h2>
+              Date Ajoutée: {order?.addedDate.getDate()}/
+              {order?.addedDate.getMonth() + 1}/{order?.addedDate.getFullYear()}
+            </h2>
+          ) : (
+            <div className="flex flex-col gap-1">
+              <h2>
+                Date Ajoutée: {order?.addedDate.getDate()}/
+                {order?.addedDate.getMonth() + 1}/
+                {order?.addedDate.getFullYear()}
+              </h2>
+              <h2>
+                Date Termineé: {order?.finishedDate.getDate()}/
+                {order?.finishedDate.getMonth() + 1}/
+                {order?.finishedDate.getFullYear()}
+              </h2>
+            </div>
+          )}
           <h2 className="">
             Commande de Client: <br /> {order?.clientOrder}
           </h2>
