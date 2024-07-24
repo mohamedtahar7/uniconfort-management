@@ -18,7 +18,7 @@ model Order {
   clientName String
   clientPhone String
   clientOrder String
-  orderImg String?
+  orderImg String[]
   note String[]
   orderProgress String
   orderState String

@@ -110,7 +110,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
           <Image
             width={480}
             height={480}
-            src={order?.orderImg}
+            src={order?.orderImg[0]}
             alt="receipt img"
           />
         </div>

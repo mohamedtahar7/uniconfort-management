@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { password } from "@/lib/password";
 const AddForm = () => {
   const router = useRouter();
+  const [imageNum, setImageNum] = useState([{}]);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [clientOrder, setClientOrder] = useState("");
@@ -19,6 +20,7 @@ const AddForm = () => {
   const [orderImg, setOrderImg] = useState<File | null>(null);
   const [orderProgress, setOrderProgress] = useState("");
   const [loading, setLoading] = useState(false);
+  const [images, setImages] = useState<any>([]);
   const id = clientName;
   const orderState = "P";
   const uploadImg = async (img: any) => {
@@ -40,23 +42,29 @@ const AddForm = () => {
     cn: string,
     cp: string,
     co: string,
-    ci: any,
+    ci: File[],
     n: string,
     op: string,
     os: string
   ) => {
-    setLoading(true);
+    let imagesLinks = [];
     let orderImgLink = "";
-    if (ci !== null) {
-      orderImgLink = await uploadImg(ci);
+    for (let i = 0; i < ci.length; i++) {
+      if (ci[i] !== null) {
+        orderImgLink = await uploadImg(ci[i]);
+        imagesLinks.push(orderImgLink);
+      }
+      orderImgLink = "";
     }
+    let finalImages = imagesLinks.filter((img) => img !== undefined);
+    console.log(imagesLinks);
     const noteTable = [...noteArray, n];
     const order = {
       id,
       clientName: cn,
       clientPhone: cp,
       clientOrder: co,
-      orderImg: orderImgLink,
+      orderImg: finalImages,
       note: noteTable,
       orderProgress: op,
       orderState: os,
@@ -72,6 +80,8 @@ const AddForm = () => {
       console.log(error);
     }
   };
+  console.log(images);
+
   return (
     <div className="sm:w-[50%] w-full">
       <Toaster richColors />
@@ -89,7 +99,7 @@ const AddForm = () => {
                 clientName,
                 clientPhone,
                 clientOrder,
-                orderImg,
+                images,
                 note,
                 orderProgress,
                 orderState
@@ -152,16 +162,27 @@ const AddForm = () => {
             <option value="Tapicier">Tapicier</option>
             <option value="Commercial">Commercial</option>
           </select>
-          <Input
-            className="cursor-pointer"
-            type="file"
-            placeholder="Image de Commande"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                setOrderImg(e.target.files[0]);
-              }
-            }}
-          />
+          <div className="flex flex-col gap-2">
+            {imageNum.map((img, id) => (
+              <Input
+                key={id}
+                className="cursor-pointer"
+                type="file"
+                placeholder="Image de Commande"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    setImages([...images, e.target.files[0]]);
+                  }
+                }}
+              />
+            ))}
+            <p
+              onClick={() => setImageNum([...imageNum, {}])}
+              className="w-full py-2 bg-[#fafbfb] text-center rounded-lg transition hover:opacity-80 cursor-pointer font-medium text-sm"
+            >
+              Ajouter une Image
+            </p>
+          </div>
           <Button
             disabled={loading}
             type="submit"
