@@ -14,6 +14,7 @@ import { CiEdit } from "react-icons/ci";
 import { AiFillDelete } from "react-icons/ai";
 import Link from "next/link";
 import { password } from "@/lib/password";
+import Slider from "./Slider";
 interface OrderCardProps {
   order: any;
 }
@@ -106,14 +107,18 @@ const OrderCard = ({ order }: OrderCardProps) => {
               </Button>
             </div> */}
         </div>
-        <div className="flex mb-6 items-center w-[360px] h-[360px] overflow-hidden">
-          <Image
-            width={480}
-            height={480}
-            src={order?.orderImg[0]}
-            alt="receipt img"
-          />
-        </div>
+        {order?.orderImg.length === 1 ? (
+          <div className="flex mb-6 items-center w-[360px] h-[360px] overflow-hidden">
+            <Image
+              width={480}
+              height={480}
+              src={order?.orderImg[0]}
+              alt="receipt img"
+            />
+          </div>
+        ) : (
+          <Slider images={order?.orderImg} />
+        )}
       </CardContent>
       <div className="absolute top-2 right-2 flex items-center gap-2">
         <Link href={`/edit/${order.id}`}>
