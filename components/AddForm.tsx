@@ -9,6 +9,7 @@ import { Toaster, toast } from "sonner";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { password } from "@/lib/password";
+import { Textarea } from "./ui/textarea";
 const AddForm = () => {
   const router = useRouter();
   const [imageNum, setImageNum] = useState([{}]);
@@ -132,15 +133,13 @@ const AddForm = () => {
             type="text"
             placeholder="Numero de Client"
           />
-          <Input
+          <Textarea
             value={clientOrder}
             onChange={(e) => {
               setClientOrder(e.target.value);
             }}
             required
             className="border-[#fffafb]"
-            type="text"
-            min={0}
             placeholder="Commande de Client"
           />
           <Input
