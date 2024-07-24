@@ -21,7 +21,7 @@ const Sidebar = () => {
           className="flex items-center gap-3 p-4 hover:bg-slate-700 cursor-pointer"
         >
           <RiProgress3Fill size={25} className="text-white" />
-          Commande en cours
+          Commandes en cours
         </Link>
         <Link
           href={"/add"}
