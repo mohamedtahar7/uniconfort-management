@@ -1,1 +1,1 @@
-export const password = "18081994";
+export const password = "uniconfort2024";
