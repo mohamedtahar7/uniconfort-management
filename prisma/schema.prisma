@@ -24,4 +24,5 @@ model Order {
   orderState String
   addedDate DateTime
   finishedDate DateTime
+  category String
 }

@@ -10,10 +10,12 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { password } from "@/lib/password";
 import { Textarea } from "./ui/textarea";
+import { categories } from "@/lib/categories";
 const AddForm = () => {
   const router = useRouter();
   const [imageNum, setImageNum] = useState([{}]);
   const [clientName, setClientName] = useState("");
+  const [category, setCategory] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [clientOrder, setClientOrder] = useState("");
   const [note, setNote] = useState("");
@@ -46,7 +48,8 @@ const AddForm = () => {
     ci: File[],
     n: string,
     op: string,
-    os: string
+    os: string,
+    cat: string
   ) => {
     let imagesLinks = [];
     let orderImgLink = "";
@@ -72,6 +75,7 @@ const AddForm = () => {
       orderState: os,
       addedDate: today,
       finishedDate: today,
+      category: cat,
     };
     try {
       const result = await addOrder(order);
@@ -106,7 +110,8 @@ const AddForm = () => {
                 images,
                 note,
                 orderProgress,
-                orderState
+                orderState,
+                category
               );
             } else {
               toast.error("Wrong password");
@@ -163,6 +168,20 @@ const AddForm = () => {
             <option value="Menuisier">Menuisier</option>
             <option value="Tapicier">Tapicier</option>
             <option value="Commercial">Commercial</option>
+          </select>
+          <select
+            className="rounded-md p-3"
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+            required
+          >
+            <option>Choose a Category</option>
+            {categories.map((cat, id) => (
+              <option key={id} value={cat}>
+                {cat}
+              </option>
+            ))}
           </select>
           <div className="flex flex-col gap-2">
             {imageNum.map((img, id) => (

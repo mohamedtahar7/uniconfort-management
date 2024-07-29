@@ -14,6 +14,7 @@ export async function addOrder(order: Order) {
       orderProgress: order.orderProgress,
       addedDate: order.addedDate,
       finishedDate: order.finishedDate,
+      category: order.category,
     },
   });
 }

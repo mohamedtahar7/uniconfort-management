@@ -8,10 +8,12 @@ import { AiOutlineMenuFold } from "react-icons/ai";
 import MobileNav from "@/components/MobileNav";
 import SearchBar from "@/components/SearchBar";
 import { QueryContext } from "@/contexts/QueryContext";
+import { categories } from "@/lib/categories";
 
 const Page = () => {
   const { query } = useContext(QueryContext);
   const [orders, setOrders] = useState([]);
+  const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(true);
   const [activeNav, setActiveNav] = useState(false);
   const fetchOrders = async () => {
@@ -38,12 +40,33 @@ const Page = () => {
         Commandes en Cours
       </h2>
       <SearchBar />
+      <div className="flex md:flex-row flex-col items-center gap-4 justify-center px-6 pb-6">
+        <h2>Filter : </h2>
+        {categories.map((cat: any, id: any) => (
+          <h2
+            className={`${
+              cat === category
+                ? "text-white bg-slate-800"
+                : "border border-slate-800"
+            } py-1 px-3 transition duration-150 hover:bg-slate-800 hover:text-white cursor-pointer`}
+            key={id}
+            onClick={() => setCategory(cat)}
+          >
+            {cat}
+          </h2>
+        ))}
+      </div>
       <div className="flex flex-col gap-5">
         {loading ? (
           <Spinner d="10" />
+        ) : category === "" ? (
+          orders
+            .filter((order: any) => order.orderState === "P")
+            .map((order, id) => <OrderCard order={order} key={id} />)
         ) : (
           orders
             .filter((order: any) => order.orderState === "P")
+            .filter((order: any) => order.category === category)
             .map((order, id) => <OrderCard order={order} key={id} />)
         )}
       </div>
