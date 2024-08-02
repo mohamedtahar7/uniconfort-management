@@ -51,6 +51,7 @@ const AddForm = () => {
     os: string,
     cat: string
   ) => {
+    setLoading(true);
     let imagesLinks = [];
     let orderImgLink = "";
     for (let i = 0; i < ci.length; i++) {
@@ -83,9 +84,11 @@ const AddForm = () => {
       toast.success(
         `The Order of Mr ${order.clientName} has been added successfully!`
       );
+      setLoading(false);
     } catch (error) {
       toast.error("Something went wrong!");
       console.log(error);
+      setLoading(false);
     }
   };
   console.log(images);

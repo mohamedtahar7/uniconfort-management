@@ -96,14 +96,14 @@ export async function updateOrderNotes(newVal: any, id: any) {
     console.log(error);
   }
 }
-export async function updateOrderState(id: any) {
+export async function updateOrderState(id: any, newState: string) {
   try {
     const updatedOrder = await db.order.update({
       where: {
         id: id,
       },
       data: {
-        orderState: "F",
+        orderState: newState,
         finishedDate: new Date(),
       },
     });

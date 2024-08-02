@@ -12,12 +12,17 @@ const MobileNav = ({ activeNav }: MobileNavProps) => {
     >
       <li>
         <Link className="transition hover:opacity-80" href={"/orders"}>
-          Commandes Prêtes
+          Commandes prêtes
         </Link>
       </li>
       <li>
         <Link className="transition hover:opacity-80" href={"/in-progress"}>
           Commandes en cours
+        </Link>
+      </li>
+      <li>
+        <Link className="transition hover:opacity-80" href={"/shipped-orders"}>
+          Commandes livrées
         </Link>
       </li>
       <li>

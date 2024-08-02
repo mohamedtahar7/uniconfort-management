@@ -30,7 +30,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
       toast.success("Tapicier Finished");
     }
     if (order?.orderProgress === "Commercial") {
-      updateOrderState(order?.id);
+      updateOrderState(order?.id, "F");
       toast.success("Order is ready to be shipped");
     }
   };
@@ -175,7 +175,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
               onClick={() => {
                 const pass = prompt("Enter the password");
                 if (pass === password) {
-                  updateOrderState(order?.id);
+                  updateOrderState(order?.id, "F");
                   toast.success("Order is ready to be shipped");
                 } else {
                   toast.error("Wrong password");
@@ -202,6 +202,39 @@ const OrderCard = ({ order }: OrderCardProps) => {
           <Link href={`/add-note/${order?.id}`}>
             <Button>Ajouter une remarque</Button>
           </Link>
+        </div>
+      )}
+      {order?.orderState === "F" && (
+        <div className="w-full p-4 absolute flex sm:flex-row flex-col gap-2 bottom-2 sm:left-0  left-2">
+          <div className="flex items-center gap-1">
+            <Button
+              onClick={() => {
+                const pass = prompt("Enter the password");
+                if (pass === password) {
+                  updateOrderState(order?.id, "S");
+                  toast.success("Commande Livrée");
+                } else {
+                  toast.error("Wrong password");
+                }
+                router.refresh();
+              }}
+            >
+              Livrer
+            </Button>
+            <Button
+              onClick={() => {
+                const pass = prompt("Enter the password");
+                if (pass === password) {
+                  updateOrderState(order?.id, "P");
+                  toast.success("Commande en cours");
+                } else {
+                  toast.error("Wrong password");
+                }
+              }}
+            >
+              Retourner vers Commandes en cours
+            </Button>
+          </div>
         </div>
       )}
     </Card>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { FaClipboardList } from "react-icons/fa";
+import { FaClipboardList, FaShippingFast } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
 import { RiProgress3Fill } from "react-icons/ri";
 
@@ -22,6 +22,13 @@ const Sidebar = () => {
         >
           <RiProgress3Fill size={25} className="text-white" />
           Commandes en cours
+        </Link>
+        <Link
+          href="/shipped-orders"
+          className="flex items-center gap-3 p-4 hover:bg-slate-700 cursor-pointer"
+        >
+          <FaShippingFast size={25} className="text-white" />
+          Commandes livrées
         </Link>
         <Link
           href={"/add"}
